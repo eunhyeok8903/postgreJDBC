@@ -5,30 +5,17 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+public class updateQuery {
 
-public class createTable {
     public static void main(String[] args) {
         Connection conn = null;
 
-        String url="jdbc:postgresql://localhost:5432/dbName";
+        String url="jdbc:postgresql://localhost:5432/DBname";
         String user="id";
         String passwd="password";
 
         Statement stmt =null;
-        String sql1 = "create table member(" +
-                "mid integer," +
-                "name text," +
-                "number text," +
-                "address text," +
-                "constraint pk_member primary key(mid)" +
-                ");";
-        String sql2="create table librarian(" +
-                "lid integer," +
-                "name text," +
-                "address text," +
-                "number text," +
-                "constraint pk_librarian primary key(lid)" +
-                ");";
+        String sql ="update member set name='lee' where mid=1";
         try{
 
             //드라이버 로딩
@@ -41,8 +28,8 @@ public class createTable {
                 System.out.println("connect success");
 
                 stmt=conn.createStatement();
-                stmt.executeUpdate(sql1);
-                stmt.executeUpdate(sql2);
+                stmt.executeUpdate(sql);
+
                 System.out.println("executeQuery success");
                 stmt.close();
                 conn.close();

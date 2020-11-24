@@ -1,12 +1,8 @@
 package com.company;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
-
-public class createTable {
+public class selectQeury {
     public static void main(String[] args) {
         Connection conn = null;
 
@@ -14,21 +10,9 @@ public class createTable {
         String user="id";
         String passwd="password";
 
+        ResultSet rs= null; //쿼리 실행 결과값 받아오기
         Statement stmt =null;
-        String sql1 = "create table member(" +
-                "mid integer," +
-                "name text," +
-                "number text," +
-                "address text," +
-                "constraint pk_member primary key(mid)" +
-                ");";
-        String sql2="create table librarian(" +
-                "lid integer," +
-                "name text," +
-                "address text," +
-                "number text," +
-                "constraint pk_librarian primary key(lid)" +
-                ");";
+        String sql = "select * from member";
         try{
 
             //드라이버 로딩
@@ -41,9 +25,19 @@ public class createTable {
                 System.out.println("connect success");
 
                 stmt=conn.createStatement();
-                stmt.executeUpdate(sql1);
-                stmt.executeUpdate(sql2);
+                rs=stmt.executeQuery(sql);
+
+                while(rs.next()) {
+                    int Id = rs.getInt("mid");
+                    String Name = rs.getString("name");
+                    String Number = rs.getString("number");
+                    String Address = rs.getString("address");
+
+                    System.out.println("ID : " + Id + " Name : " + Name + " Numebr : " + Number + " Address : " + Address);
+                }
+
                 System.out.println("executeQuery success");
+                rs.close();
                 stmt.close();
                 conn.close();
             }catch (SQLException e){
